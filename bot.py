@@ -93,11 +93,11 @@ class MyClient(discord.Client):
                 sortlist = [(k, v) for k, v in sortdict.items()]
                 reply_str = f"Top 10 most active {message.guild.name}-users:\n"
                 
-                for x in range(1,  11):
+                for x in range(0,  9):
                     try:
-                        reply_str += f"{x}. <@{str(sortlist[x][0])}> | {convert(sortlist[x][1])}\n"
+                        reply_str += f"{x + 1}. <@{str(sortlist[x][0])}> | {convert(sortlist[x][1])}\n"
                     except:
-                        reply_str += f"{x}. ----\n"
+                        reply_str += f"{x + 1}. ----\n"
 
                 await message.reply(reply_str, mention_author=True)
             
