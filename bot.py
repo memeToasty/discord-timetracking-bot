@@ -87,13 +87,16 @@ class MyClient(discord.Client):
         
         if message.content.startswith(PREFIX):
             if "leaderboard" in message.content:
+                top_count = 10
+                if type(int(message.content.split(' ')[-1])) == int:
+                    top_count = int(message.content.split(' ')[-1])
                 dataset = self.read_db()
                 marklist = sorted(dataset[str(message.guild.id)].items(), key=lambda x:x[1], reverse=True)
                 sortdict = dict(marklist)
                 sortlist = [(k, v) for k, v in sortdict.items()]
-                reply_str = f"Top 10 most active {message.guild.name}-users:\n"
+                reply_str = f"Top {top_count} most active {message.guild.name}-users:\n"
                 
-                for x in range(0,  10):
+                for x in range(0,  top_count):
                     try:
                         reply_str += f"{x + 1}. <@{str(sortlist[x][0])}> | {convert(sortlist[x][1])}\n"
                     except:
