@@ -28,7 +28,7 @@ class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.db_name = "db.json"
+        self.db_name = "data/db.json"
         self.startup = True
         # start the task to run in the background
         self.my_background_task.start()
@@ -88,8 +88,12 @@ class MyClient(discord.Client):
         if message.content.startswith(PREFIX):
             if "leaderboard" in message.content:
                 top_count = 10
-                if type(int(message.content.split(' ')[-1])) == int:
+                if message.content.split(' ')[-1] != "leaderboard":
                     top_count = int(message.content.split(' ')[-1])
+                
+                if top_count > 100:
+                    await message.reply("The requested number is too large", mention_author=True)
+                    return
                 dataset = self.read_db()
                 marklist = sorted(dataset[str(message.guild.id)].items(), key=lambda x:x[1], reverse=True)
                 sortdict = dict(marklist)
