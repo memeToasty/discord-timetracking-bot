@@ -47,6 +47,7 @@ class MyClient(discord.Client):
         print(self.user.name)
         print(self.user.id)
         print('------')
+        await self.change_presence(activity=discord.Game(name="👀"))
 
     @tasks.loop(seconds=INTERVAL)
     async def my_background_task(self):
@@ -100,6 +101,8 @@ class MyClient(discord.Client):
                 sortlist = [(k, v) for k, v in sortdict.items()]
                 reply_str = f"Top {top_count} most active {message.guild.name}-users:\n"
                 
+                if len(sortlist) < top_count:
+                    top_count = len(sortlist)
                 for x in range(0,  top_count):
                     try:
                         reply_str += f"{x + 1}. <@{str(sortlist[x][0])}> | {convert(sortlist[x][1])}\n"
