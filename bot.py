@@ -21,18 +21,25 @@ intents.members = True
 def convert(time):
     return_str = ""
     day = time // (24 * 3600)
-    time = time % (24 * 3600)
-    hour = time // 3600
-    time %= 3600
-    minutes = time // 60
-    time %= 60
-    seconds = time
+    
     if day != 0:
         return_str += f"{day} d "
+        
+    time = time % (24 * 3600)
+    hour = time // 3600
+
     if hour != 0:
         return_str += f"{hour} h "
+        
+    time %= 3600
+    minutes = time // 60
+
     if minutes != 0:
         return_str += f"{minutes} m"
+
+    time %= 60
+    seconds = time
+
     if seconds != 0:
         return_str += f" {seconds} s"
     return return_str
