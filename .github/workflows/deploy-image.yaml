@@ -31,3 +31,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ghcr.io/memetoasty/discord-timetracking-bot:latest
+      
+      - name: Restart
+        run: wget ${{ secrets.WEBHOOK }}
