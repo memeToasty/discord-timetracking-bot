@@ -147,7 +147,10 @@ class MyClient(discord.Client):
                 for x in range(len(sortlist)):
                     height.append(sortlist[x][1] / 3600)
                     matchingMember = discord.utils.find(lambda m: m.id == int(sortlist[x][0]), message.guild.members)
-                    bars.append(matchingMember.name)
+                    if matchingMember is not None:
+                        bars.append(matchingMember.name)
+                    else:
+                        bars.append("Unknown")
                 yPos = np.arange(len(bars))
 
                 fig = plt.figure()
