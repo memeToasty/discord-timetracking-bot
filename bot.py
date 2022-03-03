@@ -122,7 +122,11 @@ class MyClient(discord.Client):
                 if len(sortlist) < top_count:
                     top_count = len(sortlist)
                 for x in range(0,  top_count):
-                    reply_str += f"{x + 1}. <@{str(sortlist[x][0])}> | {convert(sortlist[x][1])} "
+                    matchingMember = discord.utils.find(lambda m: m.id == int(sortlist[x][0]), message.guild.members)
+                    if matchingMember is not None:
+                        reply_str += f"{x + 1}. {matchingMember.name} | {convert(sortlist[x][1])} "
+                    else:
+                        reply_str += f"{x + 1}. unknown User | {convert(sortlist[x][1])} "
                     if x > 0 and deltaFlag:
                         reply_str += f"| Δ{convert(sortlist[x-1][1] - sortlist[x][1])}"
                     reply_str += "\n"
@@ -134,9 +138,13 @@ class MyClient(discord.Client):
                 for user in message.mentions:
                     try:
                         time_string = convert(dataset[str(message.guild.id)][str(user.id)])
-                        reply_str += f"<@{user.id}> has an online-time of: {time_string}\n"
+                        matchingMember = discord.utils.find(lambda m: m.id == int(sortlist[x][0]), message.guild.members)
+                        if matchingMember is not None:
+                            reply_str += f"{matchingMember.name} has an online-time of: {time_string}\n"
+                        else:
+                            reply_str += f"unknown User has an online-time of: {time_string}\n"
                     except:
-                        reply_str += f"<@{user.id}> has no online-time\n"
+                        reply_str += f"This user has no online-time\n"
                 await message.reply(reply_str, mention_author=True)
             elif "graph" in message.content:
                 sortlist = self.getRankings(message)

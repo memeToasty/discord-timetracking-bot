@@ -14,6 +14,7 @@
 Run `python bot.py`
 
 Chat-Commands:
+- `ot USERMENTION` - Shows the online time of mentioned user
 - `ot leaderboard` - Shows the 10 most active users of current Server
 - `ot leaderboard [NUM<101]` Shows the NUM most active users of current Server
 - `ot delta leaderboard` Shows the 10 most active users with the Time Delta to the next place
